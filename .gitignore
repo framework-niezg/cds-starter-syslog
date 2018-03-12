@@ -1,3 +1,14 @@
 /.idea/
 /target/
 *.iml
+/.idea/
+/target/
+.DS_Store
+node_modules/
+npm-debug.log
+.idea/
+.idea
+/wzyg-sjzx.ipr
+/wzyg-sjzx.iws
+/wzyg-sjzx.iml
+/dataSources/
