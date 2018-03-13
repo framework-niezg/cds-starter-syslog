@@ -63,7 +63,7 @@ module.exports = merge(baseWebpackConfig, {
     // }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: 'vendor1',
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -78,8 +78,8 @@ module.exports = merge(baseWebpackConfig, {
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
+      name: 'manifest1',
+      chunks: ['vendor1']
     })
   ]
 })
@@ -132,7 +132,7 @@ for (var pathname in pages) {
     },
     xhtml:true,
     inject: true,             // js插入位置
-    chunks: ["manifest","vendor",pathname] ,       // 每个html引用的js模块，也可以在这里加上vendor等公用模块
+    chunks: ["manifest1","vendor1",pathname] ,       // 每个html引用的js模块，也可以在这里加上vendor等公用模块
     chunksSortMode:"dependency"
   };
   // 需要生成几个html文件，就配置几个HtmlWebpackPlugin对象
