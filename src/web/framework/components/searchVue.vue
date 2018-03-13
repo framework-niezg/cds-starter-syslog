@@ -2,7 +2,7 @@
   <el-row ref="form" :inline="true"  class="basic-form">
     <div v-for="item in searchOptions" class="inline-block">
       <el-col v-if="item.type === 'time'">
-        <label class="label-text">{{item.text}}</label>
+        <label class="label-text">{{item.text}}:</label>
         <input style="display:none"/>
         <el-date-picker
           v-model="dateRange"
@@ -20,12 +20,12 @@
         </el-date-picker>
         </el-col>
       <el-col v-if="item.type === 'input'">
-        <label class="label-text">{{item.text}}</label>
+        <label class="label-text">{{item.text}}:</label>
         <input style="display:none"/>
         <el-input  auto-complete="new-password" class="basic-input" size="mini" :name="item.name" @change.native="inputChange"></el-input>
       </el-col>
       <el-col v-if="item.type === 'options'">
-        <label class="label-text">{{item.text}}</label>
+        <label class="label-text">{{item.text}}:</label>
         <el-select :value="searchSelectData[item.id].value"  :name="item.name" class="basic-select" size="mini" placeholder="请选择" v-on:change="optionChange">
           <el-option
             v-for="type in searchSelectData[item.id].data"
@@ -36,7 +36,7 @@
         </el-select>
       </el-col>
       <el-col v-if="item.type === 'select'">
-        <label class="label-text">{{item.text}}</label>
+        <label class="label-text">{{item.text}}:</label>
         <select :name="item.name" class="basic-select" size="mini" placeholder="请选择" @change="optionChange">
           <option value="">全部</option>
           <option
@@ -80,7 +80,7 @@
     padding-bottom: 5px;
   }
   .label-text{
-    padding-left:5px;
+    padding-left:20px;
     line-height: normal;
     vertical-align: middle;
     font-size: 14px;
