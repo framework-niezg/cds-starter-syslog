@@ -51,7 +51,7 @@ public class SysLogController {
     public ResponseResult<PageResult<SysLogForm>> querySysLogs(Paging paging,
                                                                @RequestParam(required = false,name = "queryString") List<String> queryString,
                                                                @RequestParam(required = false,name = "orderBy") List<String> orderBys) {
-        if(orderBys == null) {
+        if(CollectionUtils.isEmpty(orderBys)) {
             orderBys = new ArrayList<>();
             //默认按操作时间倒序排列
             orderBys.add("createTimeDesc");
