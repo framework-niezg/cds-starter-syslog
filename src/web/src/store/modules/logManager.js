@@ -15,7 +15,7 @@ const state = {
     query: ["logGroup","logEvent","createTime","operationUser"],
     queryString: [],
     pageIndex: "1",
-    limit: 5,
+    limit: 10,
     orderBy: ""
   },
   options:{
