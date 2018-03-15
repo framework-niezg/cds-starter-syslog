@@ -85,6 +85,7 @@
     vertical-align: middle;
     font-size: 14px;
     display: inline-block;
+    font-weight:bold;
   }
 </style>
 
