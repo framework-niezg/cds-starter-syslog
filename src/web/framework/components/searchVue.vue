@@ -99,6 +99,14 @@
         searchOptions: "searchOptions",
         searchSelectData:"searchSelectData"
       }),
+      dateRange:{
+        set:function(e){
+          this.date = e;
+        },
+        get:function(){
+          return this.date;
+        }
+      }
     },
     methods: {
       inputChange(e) {
@@ -134,7 +142,7 @@
     },
     data() {
         return{
-          dateRange:[new Date(),new Date()]
+          date:[new Date(),new Date()]
         }
     },
     created() {

@@ -8,7 +8,7 @@ import UserList from "src/collection/userList"
 const state = {
   name:"logManager",
   param: {
-    createTime:[new Date(new Date().Format("yyyy-MM-dd")).getTime(),new Date(new Date().Format("yyyy-MM-dd")).getTime()],
+    createTime:[],
     logGroup: "",
     logEvent: "",
     operationUser:"",
@@ -92,7 +92,19 @@ const actions = {
     dispatch("getItems");
   },
   getItems({commit, state}) {
-    let param = Util.resetParamEq(Object.assign({},state.param));
+    let p;
+    if(state.param.createTime.length==0){
+      let d = new Date();
+      let d1 = new Date();
+      d.setHours(0);
+      d.setMinutes(0);
+      d.setSeconds(0);
+      d1.setHours(23);
+      d1.setMinutes(59);
+      d1.setSeconds(59);
+      p = Object.assign({},state.param,{createTime:[d.getTime(),d1.getTime()]});
+    }
+     let param = Util.resetParamEq(Object.assign({},p ? p: state.param));
     XHR.ajaxGetForArray({
       url: state.url.search,
       data: param
@@ -163,9 +175,20 @@ const mutations = {
   },
   [types[state.actions.time]](state,time){
     let a = [];
-    time.forEach((t)=>{
-      console.log(t,new Date(t));
-      a.push(new Date(t).getTime())
+    time.forEach((t,index)=>{
+      let at;
+      if(index==0){
+        at = new Date(t);
+        at.setHours(0);
+        at.setMinutes(0);
+        at.setSeconds(0)
+      }else{
+        at = new Date(t);
+        at.setHours(23);
+        at.setMinutes(59);
+        at.setSeconds(59)
+      }
+      a.push(at.getTime());
     });
     state.param = Object.assign({},state.param,{createTime:a});
   },
