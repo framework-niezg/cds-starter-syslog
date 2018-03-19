@@ -58,11 +58,11 @@ class User {
           break;
         case"name":
           this.model[key] = this.defaultData[key] == "0" ? this.defaultData[key] : (this.defaultData[key] ? this.defaultData[key] : "");
+          this.model.label = this.defaultData[key] ;
           break;
         case"account":
           this.model[key] = this.defaultData[key] == "0" ? this.defaultData[key] : (this.defaultData[key] ? this.defaultData[key] : "");
           this.model.value = this.defaultData[key] ;
-          this.model.label = this.defaultData[key] ;
           break;
         default:
           this.model[key] = this.defaultData[key] == "0" ? this.defaultData[key] : (this.defaultData[key] ? this.defaultData[key] : "");
