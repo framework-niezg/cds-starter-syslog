@@ -44,6 +44,11 @@
 
         <dependency>
             <groupId>com.zjcds.common</groupId>
+            <artifactId>cds-starter-db-auto-update</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zjcds.common</groupId>
             <artifactId>cds-starter-jpa</artifactId>
         </dependency>
 
