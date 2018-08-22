@@ -5,6 +5,7 @@ import com.zjcds.common.syslog.annotation.TemplateContext;
 import com.zjcds.common.syslog.annotation.TemplateVariable;
 import com.zjcds.common.syslog.service.SpringEventPublishService;
 import com.zjcds.common.syslog.util.LogRegisterUtils;
+import com.zjcds.common.syslog.util.SysLogEvaluationContextUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -66,6 +67,7 @@ public class SysLogAspect implements ApplicationContextAware {
                 .templateText(templateText)
                 .build();
         springEventPublishService.publishApplicationEvent(event);
+        SysLogEvaluationContextUtils.clearEvaluationContext();
     }
 
     private Map<String, Object> dealTemplateContext(SysLog sysLog, StandardEvaluationContext evaluationContext) {
@@ -82,6 +84,12 @@ public class SysLogAspect implements ApplicationContextAware {
     private StandardEvaluationContext prepareSpelEvaluationContext(Object[] args, Object result) {
         StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
         evaluationContext.setBeanResolver(new BeanFactoryResolver(applicationContext));
+        Map<String, Object> evaluationMap = SysLogEvaluationContextUtils.getEvaluationContext();
+        if (evaluationMap != null) {
+            for (Map.Entry<String, Object> entry : evaluationMap.entrySet()) {
+                evaluationContext.setVariable(entry.getKey(), entry.getValue());
+            }
+        }
         evaluationContext.setVariable("args", args);
         evaluationContext.setVariable("result", result);
         return evaluationContext;
