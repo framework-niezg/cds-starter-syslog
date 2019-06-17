@@ -25,7 +25,9 @@ public class SysLogApplicationEvent extends ApplicationEvent {
 
     private Date occurDate;
 
-    private Map<String,Object> evaluateContext ;
+    private Map<String,Object> evaluateContext;
+
+    private String templateText;
 
     public LogEvent getLogEvent() {
         return logEvent;
@@ -59,12 +61,19 @@ public class SysLogApplicationEvent extends ApplicationEvent {
         this.evaluateContext = evaluateContext;
     }
 
+    public String getTemplateText() {
+        return templateText;
+    }
+
+    public void setTemplateText(String templateText) {
+        this.templateText = templateText;
+    }
+
     public String logDetail() {
-        String templateName = LogRegisterUtils.getLogEventKey(logEvent);
         Map<String,Object> evaluateContextForAll = new HashMap<>();
         evaluateContextForAll.putAll(evaluateContext);
         appendExtendContextVariate(evaluateContextForAll);
-        return TemplateUtils.evaluateTemplate(templateName,evaluateContextForAll);
+        return TemplateUtils.evaluateTemplate(templateText,evaluateContextForAll);
     }
 
     /**
@@ -87,6 +96,7 @@ public class SysLogApplicationEvent extends ApplicationEvent {
         private Date occurDate;
         private Class<T> instanceClass;
         private Map<String,Object> evaluateContext = new HashMap<>();
+        private String templateText;
 
         private Builder(Class<T> instanceClass) {
             this.instanceClass = instanceClass;
@@ -118,6 +128,16 @@ public class SysLogApplicationEvent extends ApplicationEvent {
             return this;
         }
 
+        public Builder<T> evaluateVariables(Map<String, Object> variables) {
+            evaluateContext.putAll(variables);
+            return this;
+        }
+
+        public Builder<T> templateText(String val) {
+            templateText = val;
+            return this;
+        }
+
         public T build() {
             Assert.notNull(source,"事件源对象不能为空！");
             T sysLogApplicationEvent;
@@ -135,6 +155,8 @@ public class SysLogApplicationEvent extends ApplicationEvent {
                 occurDate = new Date();
             sysLogApplicationEvent.setOccurDate(occurDate);
             sysLogApplicationEvent.setEvaluateContext(evaluateContext);
+            Assert.hasText(templateText, "模板文本不能为空！");
+            sysLogApplicationEvent.setTemplateText(templateText);
             return sysLogApplicationEvent;
 
         }
