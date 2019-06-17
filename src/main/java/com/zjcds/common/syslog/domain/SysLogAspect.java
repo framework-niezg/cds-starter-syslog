@@ -63,8 +63,8 @@ public class SysLogAspect implements ApplicationContextAware {
                 .logEvent(logEvent)
                 .occurDate(new Date())
                 .operationUser(operationUser)
-                .evaluateVariables(templateContext)
-                .templateText(templateText)
+                //.evaluateVariables(templateContext)
+                //.templateText(templateText)
                 .build();
         springEventPublishService.publishApplicationEvent(event);
         SysLogEvaluationContextUtils.clearEvaluationContext();
